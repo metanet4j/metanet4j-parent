@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.3.2.RELEASE</version>
+        <version>4.1.1</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <packaging>pom</packaging>
@@ -17,27 +17,24 @@
     <properties>
         <metanet4j.version>0.2.0</metanet4j.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>${java.version}</maven.compiler.source>
-        <maven.compiler.target>${java.version}</maven.compiler.target>
-        <spring-cloud.version>Hoxton.SR8</spring-cloud.version>
 
-        <log4j.version>2.20.0</log4j.version>
-        <slf4j.version>1.7.32</slf4j.version>
+        <!-- Java 25：Boot 4.1 支持 17–26；release 统一控制编译目标 -->
+        <java.version>25</java.version>
+        <maven.compiler.release>${java.version}</maven.compiler.release>
+
+        <spring-cloud.version>2025.1.3</spring-cloud.version>
 
         <hutool-all.version>5.7.12</hutool-all.version>
-        <commons-lang3.version>3.10</commons-lang3.version>
         <commons-collections4.version>4.4</commons-collections4.version>
-        <lombok.version>1.18.20</lombok.version>
+        <!-- 保留：Boot BOM 不管理 guava，且 30.1.1-jre 在 JDK 25 下可编译（计划 §6.2） -->
         <guava.version>30.1.1-jre</guava.version>
-        <junit.version>4.13</junit.version>
-        <jackson.version>2.13.2 </jackson.version>
+        <junit.version>4.13.2</junit.version>
+        <!-- 保留：fastjson 已停更，本次不动（计划 §6.2） -->
         <fastjson.version>1.2.76</fastjson.version>
+        <!-- 保留：安全升级单独立项，本次不动（计划 §6.2） -->
         <bcprov-jdk18on.version>1.71</bcprov-jdk18on.version>
-        <hibernate-validator.version>6.1.5.Final</hibernate-validator.version>
 
-        <mysql-connector-java.version>8.0.25</mysql-connector-java.version>
-        <lettuce.version>5.3.2.RELEASE</lettuce.version>
-        <druid.version>1.2.1</druid.version>
+        <druid.version>1.2.28</druid.version>
 
         <jsonrpc4j>1.0</jsonrpc4j>
         <jeromq.version>0.5.2</jeromq.version>
@@ -46,24 +43,23 @@
         <bitcoinsv-jcl.version>1.0.5</bitcoinsv-jcl.version>
 
         <!--sql -->
-        <mybatis-plus>3.4.2</mybatis-plus>
-        <mybatis-plus-generator>3.4.1</mybatis-plus-generator>
-        <velocity-engine-core>2.0</velocity-engine-core>
-        <mybatis-plus>3.4.2</mybatis-plus>
+        <mybatis-plus>3.5.17</mybatis-plus>
+        <mybatis-plus-generator>3.5.17</mybatis-plus-generator>
+        <velocity-engine-core>2.4.1</velocity-engine-core>
 
-        <!-- es-->
-        <elasticsearch.client.version>7.17.5</elasticsearch.client.version>
-        <jakarta.json.version>2.0.1</jakarta.json.version>
+        <!-- es -->
+        <elasticsearch.client.version>9.4.5</elasticsearch.client.version>
 
-        <!-- swagger-->
-        <swagger2.version>2.9.2</swagger2.version>
+        <!-- swagger（仅注解，不引 springdoc starter） -->
+        <swagger-annotations-jakarta.version>2.2.55</swagger-annotations-jakarta.version>
 
         <!-- mapstruct -->
         <org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
         <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
 
-
-        <jsonwebtoken.version>0.9.1</jsonwebtoken.version>
+        <jsonwebtoken.version>0.13.0</jsonwebtoken.version>
+        <!-- 注意：lombok 版本不再在此钉死（随 Boot BOM 1.18.46）；
+             annotationProcessorPaths 里用字面量 1.18.46，见复评 P1-1 -->
     </properties>
 
 
@@ -80,14 +76,6 @@
                 <groupId>com.metanet4j</groupId>
                 <artifactId>metanet4j-sdk</artifactId>
                 <version>0.2.0</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.alibaba.cloud</groupId>
-                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
-                <version>2.2.3.RELEASE</version>
-                <type>pom</type>
-                <scope>import</scope>
             </dependency>
 
             <dependency>
@@ -109,43 +97,10 @@
                 </exclusions>
             </dependency>
 
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-jdk14</artifactId>
-                <version>${slf4j.version}</version>
-                <scope>compile</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>jul-to-slf4j</artifactId>
-                <version>${slf4j.version}</version>
-                <scope>compile</scope>
-            </dependency>
-
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-api</artifactId>
-                <version>${slf4j.version}</version>
-            </dependency>
-
+            <!-- SLF4J 2.x 绑定；版本随 Boot BOM（log4j2=2.25.5） -->
             <dependency>
                 <groupId>org.apache.logging.log4j</groupId>
-                <artifactId>log4j-slf4j-impl</artifactId>
-                <version>${log4j.version}</version>
-                <scope>runtime</scope>
-            </dependency>
-
-            <!--https://logging.apache.org/log4j/2.x/log4j-slf4j-impl.html -->
-            <dependency>
-                <groupId>org.apache.logging.log4j</groupId>
-                <artifactId>log4j-api</artifactId>
-                <version>${log4j.version}</version>
-                <scope>runtime</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.logging.log4j</groupId>
-                <artifactId>log4j-core</artifactId>
-                <version>${log4j.version}</version>
+                <artifactId>log4j-slf4j2-impl</artifactId>
                 <scope>runtime</scope>
             </dependency>
 
@@ -157,20 +112,8 @@
 
             <dependency>
                 <groupId>org.apache.commons</groupId>
-                <artifactId>commons-lang3</artifactId>
-                <version>${commons-lang3.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.apache.commons</groupId>
                 <artifactId>commons-collections4</artifactId>
                 <version>${commons-collections4.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok</artifactId>
-                <version>${lombok.version}</version>
             </dependency>
 
 
@@ -189,51 +132,13 @@
             </dependency>
 
             <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-databind</artifactId>
-                <version>${jackson.version}</version>
-                <scope>compile</scope>
-            </dependency>
-
-            <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-annotations</artifactId>
-                <version>${jackson.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-core</artifactId>
-                <version>${jackson.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.datatype</groupId>
-                <artifactId>jackson-datatype-jdk8</artifactId>
-                <version>${jackson.version}</version>
-                <scope>compile</scope>
-            </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.datatype</groupId>
-                <artifactId>jackson-datatype-jsr310</artifactId>
-                <version>${jackson.version}</version>
-                <scope>compile</scope>
-            </dependency>
-
-            <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
                 <version>${fastjson.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.fasterxml.jackson.module</groupId>
-                <artifactId>jackson-module-parameter-names</artifactId>
-                <version>${jackson.version}</version>
-                <scope>compile</scope>
-            </dependency>
-
-            <dependency>
-                <groupId>mysql</groupId>
-                <artifactId>mysql-connector-java</artifactId>
-                <version>${mysql-connector-java.version}</version>
+                <groupId>com.mysql</groupId>
+                <artifactId>mysql-connector-j</artifactId>
             </dependency>
 
             <dependency>
@@ -244,14 +149,8 @@
 
             <dependency>
                 <groupId>com.alibaba</groupId>
-                <artifactId>druid-spring-boot-starter</artifactId>
+                <artifactId>druid-spring-boot-4-starter</artifactId>
                 <version>${druid.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>io.lettuce</groupId>
-                <artifactId>lettuce-core</artifactId>
-                <version>${lettuce.version}</version>
             </dependency>
 
             <dependency>
@@ -282,7 +181,7 @@
 
             <dependency>
                 <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <artifactId>mybatis-plus-spring-boot4-starter</artifactId>
                 <version>${mybatis-plus}</version>
             </dependency>
 
@@ -335,28 +234,17 @@
             </dependency>
 
             <dependency>
-                <groupId>org.hibernate.validator</groupId>
-                <artifactId>hibernate-validator</artifactId>
-                <version>${hibernate-validator.version}</version>
-            </dependency>
-
-            <dependency>
                 <groupId>co.elastic.clients</groupId>
                 <artifactId>elasticsearch-java</artifactId>
                 <version>${elasticsearch.client.version}</version>
                 <scope>compile</scope>
             </dependency>
 
+            <!-- 代码只用注解；不引 springdoc starter（计划 §1 范围外） -->
             <dependency>
-                <groupId>jakarta.json</groupId>
-                <artifactId>jakarta.json-api</artifactId>
-                <version>${jakarta.json.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-swagger2</artifactId>
-                <version>${swagger2.version}</version>
+                <groupId>io.swagger.core.v3</groupId>
+                <artifactId>swagger-annotations-jakarta</artifactId>
+                <version>${swagger-annotations-jakarta.version}</version>
             </dependency>
 
             <dependency>
@@ -365,11 +253,23 @@
                 <version>${org.mapstruct.version}</version>
             </dependency>
 
+            <!-- JSON Web Token Support（0.9.1 依赖 javax.xml.bind，Java 25 下不可用） -->
             <dependency>
-                <!-- JSON Web Token Support -->
                 <groupId>io.jsonwebtoken</groupId>
-                <artifactId>jjwt</artifactId>
+                <artifactId>jjwt-api</artifactId>
                 <version>${jsonwebtoken.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-impl</artifactId>
+                <version>${jsonwebtoken.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-jackson</artifactId>
+                <version>${jsonwebtoken.version}</version>
+                <scope>runtime</scope>
             </dependency>
         </dependencies>
 
@@ -396,10 +296,9 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
+                <!-- 版本随 spring-boot-starter-parent 的 pluginManagement（4.1.1 → 3.15.0） -->
                 <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
+                    <!-- 编译目标由 <maven.compiler.release>${java.version}</maven.compiler.release> 控制 -->
                     <annotationProcessorPaths>
                         <path>
                             <groupId>org.mapstruct</groupId>
@@ -410,7 +309,9 @@
                         <path>
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
-                            <version>${lombok.version}</version>
+                            <!-- 字面量：与 Boot 4.1.1 BOM 的 1.18.46 对齐（复评 P1-1：
+                                 该属性已删除，不能再用 ${lombok.version}） -->
+                            <version>1.18.46</version>
                         </path>
                         <path>
                             <groupId>org.projectlombok</groupId>
@@ -420,6 +321,41 @@
                         <!-- other annotation processors -->
                     </annotationProcessorPaths>
                 </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <!-- 版本由 spring-boot-starter-parent 的 pluginManagement 提供（3.6.3）
+                     rules 放在插件级（而非 execution 内）：这样 `mvn enforcer:enforce`
+                     命令行调用与 validate 阶段绑定执行两条路径都能生效 -->
+                <configuration>
+                    <rules>
+                        <requireJavaVersion>
+                            <version>[25,)</version>
+                            <message>本项目要求 JDK 25+（Boot 4.1.1 / Java 25 升级）</message>
+                        </requireJavaVersion>
+                        <bannedDependencies>
+                            <excludes>
+                                <exclude>javax.*:*</exclude>
+                            </excludes>
+                            <!-- 白名单：Redisson 4.7.0 传递引入，短期无法移除；
+                                 若 P4 在 component-cache 排除该依赖，可删掉此行 -->
+                            <includes>
+                                <include>javax.cache:cache-api</include>
+                            </includes>
+                            <message>javax.* 禁止进入依赖树（迁移到 jakarta / org.jspecify）</message>
+                        </bannedDependencies>
+                    </rules>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>enforce-java-25-and-banned-javax</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
 
             <plugin>
