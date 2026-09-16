@@ -97,12 +97,9 @@
                 </exclusions>
             </dependency>
 
-            <!-- SLF4J 2.x 绑定；版本随 Boot BOM（log4j2=2.25.5） -->
-            <dependency>
-                <groupId>org.apache.logging.log4j</groupId>
-                <artifactId>log4j-slf4j2-impl</artifactId>
-                <scope>runtime</scope>
-            </dependency>
+            <!-- log4j-slf4j2-impl 不在此声明：版本随 Boot BOM（log4j-bom 2.25.5）。
+                 经验证，留一条不带 <version> 的 depMgmt 条目会屏蔽 BOM 版本管理，
+                 子模块会直接报 version is missing（2026-09-16 实测） -->
 
             <dependency>
                 <groupId>cn.hutool</groupId>
@@ -136,10 +133,8 @@
                 <artifactId>fastjson</artifactId>
                 <version>${fastjson.version}</version>
             </dependency>
-            <dependency>
-                <groupId>com.mysql</groupId>
-                <artifactId>mysql-connector-j</artifactId>
-            </dependency>
+            <!-- mysql-connector-j 不在此声明：版本随 Boot BOM（9.7.0）；
+                 不带 <version> 的条目会屏蔽 BOM（见上） -->
 
             <dependency>
                 <groupId>com.alibaba</groupId>
