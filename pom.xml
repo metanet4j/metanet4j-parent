@@ -28,7 +28,6 @@
         <commons-collections4.version>4.4</commons-collections4.version>
         <!-- 保留：Boot BOM 不管理 guava，且 30.1.1-jre 在 JDK 25 下可编译（计划 §6.2） -->
         <guava.version>30.1.1-jre</guava.version>
-        <junit.version>4.13.2</junit.version>
         <!-- 保留：fastjson 已停更，本次不动（计划 §6.2） -->
         <fastjson.version>1.2.76</fastjson.version>
         <!-- 保留：安全升级单独立项，本次不动（计划 §6.2） -->
@@ -121,12 +120,6 @@
                 <scope>compile</scope>
             </dependency>
 
-
-            <dependency>
-                <groupId>junit</groupId>
-                <artifactId>junit</artifactId>
-                <version>${junit.version}</version>
-            </dependency>
 
             <dependency>
                 <groupId>com.alibaba</groupId>
