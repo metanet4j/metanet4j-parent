@@ -15,9 +15,8 @@
     <name>metanet4j-parent</name>
     <description>metanet4j parent</description>
     <properties>
-        <metanet4j.version>0.1.0</metanet4j.version>
+        <metanet4j.version>0.2.0</metanet4j.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>11</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <spring-cloud.version>Hoxton.SR8</spring-cloud.version>
@@ -74,7 +73,7 @@
             <dependency>
                 <groupId>com.metanet4j</groupId>
                 <artifactId>metanet4j-base</artifactId>
-                <version>0.1.0</version>
+                <version>0.2.0</version>
             </dependency>
 
             <dependency>
