@@ -41,6 +41,11 @@
         <bitcoinjsv.version>1.0.4</bitcoinjsv.version>
         <bitcoinsv-jcl.version>1.0.5</bitcoinsv-jcl.version>
 
+        <!-- jacoco:check 的类级例外清单：默认值匹配不到任何类；
+             仅 metanet4j-sdk 按 unit-coverage-exceptions.json 覆盖为已批准的 12 行例外类。
+             清单由任务根目录的 verify-unit.py 严格模式双向核对 -->
+        <jacoco.unit.check.excludes>__no_coverage_exclusions__</jacoco.unit.check.excludes>
+
         <!--sql -->
         <mybatis-plus>3.5.17</mybatis-plus>
         <mybatis-plus-generator>3.5.17</mybatis-plus-generator>
@@ -384,6 +389,9 @@
                             <rules>
                                 <rule>
                                     <element>CLASS</element>
+                                    <excludes>
+                                        <exclude>${jacoco.unit.check.excludes}</exclude>
+                                    </excludes>
                                     <limits>
                                         <limit><counter>LINE</counter><value>MISSEDCOUNT</value><maximum>0</maximum></limit>
                                         <limit><counter>BRANCH</counter><value>MISSEDCOUNT</value><maximum>0</maximum></limit>
