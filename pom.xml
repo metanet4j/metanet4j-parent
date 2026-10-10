@@ -178,6 +178,14 @@
                 <version>${mybatis-plus}</version>
             </dependency>
 
+            <!-- BSV 能力层：由 metanet4j-bsv-sdk 提供（@bsv/sdk 2.7.1 的 Java 移植），
+                 取代 io.bitcoinsv.bitcoinjsv:bitcoinj-base；版本复用 metanet4j.version -->
+            <dependency>
+                <groupId>com.metanet4j</groupId>
+                <artifactId>metanet4j-bsv-sdk</artifactId>
+                <version>${metanet4j.version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>io.bitcoinsv.bitcoinjsv</groupId>
                 <artifactId>bitcoinj-base</artifactId>
