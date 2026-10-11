@@ -186,47 +186,12 @@
                 <version>${metanet4j.version}</version>
             </dependency>
 
-            <dependency>
-                <groupId>io.bitcoinsv.bitcoinjsv</groupId>
-                <artifactId>bitcoinj-base</artifactId>
-                <version>${bitcoinjsv.version}</version>
-            </dependency>
 
 
-            <dependency>
-                <groupId>io.bitcoinsv.jcl</groupId>
-                <artifactId>jcl-store-levelDB</artifactId>
-                <version>${bitcoinsv-jcl.version}</version>
-                <scope>compile</scope>
-            </dependency>
 
-            <dependency>
-                <groupId>io.bitcoinsv.jcl</groupId>
-                <artifactId>jcl-store</artifactId>
-                <version>${bitcoinsv-jcl.version}</version>
-                <scope>compile</scope>
-            </dependency>
 
-            <dependency>
-                <groupId>io.bitcoinsv.jcl</groupId>
-                <artifactId>jcl-store-keyValue</artifactId>
-                <version>${bitcoinsv-jcl.version}</version>
-                <scope>compile</scope>
-            </dependency>
 
-            <dependency>
-                <groupId>io.bitcoinsv.jcl</groupId>
-                <artifactId>jcl-tools</artifactId>
-                <version>${bitcoinsv-jcl.version}</version>
-                <scope>compile</scope>
-            </dependency>
 
-            <dependency>
-                <groupId>io.bitcoinsv.jcl</groupId>
-                <artifactId>jcl-net</artifactId>
-                <version>${bitcoinsv-jcl.version}</version>
-                <scope>compile</scope>
-            </dependency>
 
             <dependency>
                 <groupId>org.bouncycastle</groupId>
