@@ -385,13 +385,6 @@
                         <artifactId>maven-surefire-plugin</artifactId>
                         <configuration>
                             <excludedGroups>integration,external</excludedGroups>
-                            <!-- 仅在 unit-coverage profile 下：让「覆盖率采集」与「测试通过与否」解耦。
-                                 否则任一测试失败都会令构建中断，jacoco:report 无从运行、覆盖证据完全缺失
-                                 （实测：failures=1 → BUILD FAILURE → 既无 jacoco-unit.exec 也无 XML）。
-                                 注意这**不放宽质量门禁**：surefire 报告照常记录全部失败，
-                                 verify-unit.py 仍以自身逻辑判定 failures/errors 并列为问题；
-                                 常规（非该 profile）构建也仍会在测试失败时中断。 -->
-                            <testFailureIgnore>true</testFailureIgnore>
                         </configuration>
                     </plugin>
                 </plugins>
