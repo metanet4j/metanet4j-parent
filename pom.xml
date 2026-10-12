@@ -38,8 +38,6 @@
         <jsonrpc4j>1.0</jsonrpc4j>
         <jeromq.version>0.5.2</jeromq.version>
 
-        <bitcoinjsv.version>1.0.4</bitcoinjsv.version>
-        <bitcoinsv-jcl.version>1.0.5</bitcoinsv-jcl.version>
 
         <!-- jacoco:check 的类级例外清单：默认值匹配不到任何类；
              仅 metanet4j-sdk 按 unit-coverage-exceptions.json 覆盖为已批准的 12 行例外类。
@@ -179,7 +177,7 @@
             </dependency>
 
             <!-- BSV 能力层：由 metanet4j-bsv-sdk 提供（@bsv/sdk 2.7.1 的 Java 移植），
-                 取代 io.bitcoinsv.bitcoinjsv:bitcoinj-base；版本复用 metanet4j.version -->
+                 版本复用 metanet4j.version -->
             <dependency>
                 <groupId>com.metanet4j</groupId>
                 <artifactId>metanet4j-bsv-sdk</artifactId>
