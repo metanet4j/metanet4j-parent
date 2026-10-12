@@ -38,8 +38,6 @@
         <jsonrpc4j>1.0</jsonrpc4j>
         <jeromq.version>0.5.2</jeromq.version>
 
-        <bitcoinjsv.version>1.0.4</bitcoinjsv.version>
-        <bitcoinsv-jcl.version>1.0.5</bitcoinsv-jcl.version>
 
         <!-- jacoco:check 的类级例外清单：默认值匹配不到任何类；
              仅 metanet4j-sdk 按 unit-coverage-exceptions.json 覆盖为已批准的 12 行例外类。
@@ -179,7 +177,7 @@
             </dependency>
 
             <!-- BSV 能力层：由 metanet4j-bsv-sdk 提供（@bsv/sdk 2.7.1 的 Java 移植），
-                 取代 io.bitcoinsv.bitcoinjsv:bitcoinj-base；版本复用 metanet4j.version -->
+                 版本复用 metanet4j.version -->
             <dependency>
                 <groupId>com.metanet4j</groupId>
                 <artifactId>metanet4j-bsv-sdk</artifactId>
@@ -385,13 +383,6 @@
                         <artifactId>maven-surefire-plugin</artifactId>
                         <configuration>
                             <excludedGroups>integration,external</excludedGroups>
-                            <!-- 仅在 unit-coverage profile 下：让「覆盖率采集」与「测试通过与否」解耦。
-                                 否则任一测试失败都会令构建中断，jacoco:report 无从运行、覆盖证据完全缺失
-                                 （实测：failures=1 → BUILD FAILURE → 既无 jacoco-unit.exec 也无 XML）。
-                                 注意这**不放宽质量门禁**：surefire 报告照常记录全部失败，
-                                 verify-unit.py 仍以自身逻辑判定 failures/errors 并列为问题；
-                                 常规（非该 profile）构建也仍会在测试失败时中断。 -->
-                            <testFailureIgnore>true</testFailureIgnore>
                         </configuration>
                     </plugin>
                 </plugins>
