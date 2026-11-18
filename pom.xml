@@ -44,6 +44,12 @@
              清单由任务根目录的 verify-unit.py 严格模式双向核对 -->
         <jacoco.unit.check.excludes>__no_coverage_exclusions__</jacoco.unit.check.excludes>
 
+        <!-- Checkstyle：插件与引擎版本统一在此管理，子模块只声明插件、绑执行阶段 -->
+        <maven-checkstyle-plugin.version>3.6.0</maven-checkstyle-plugin.version>
+        <checkstyle.version>14.4.0</checkstyle.version>
+        <!-- 先只报告（false）：需要硬门禁时加 -Dcheckstyle.failOnViolation=true -->
+        <checkstyle.failOnViolation>false</checkstyle.failOnViolation>
+
         <!--sql -->
         <mybatis-plus>3.5.17</mybatis-plus>
         <mybatis-plus-generator>3.5.17</mybatis-plus-generator>
@@ -255,6 +261,34 @@
     </dependencies>
 
     <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <version>${maven-checkstyle-plugin.version}</version>
+                    <!-- 插件自带引擎 9.3，遇到 Java 21+ 语法（如 record pattern）直接解析失败；
+                         引擎只能在 <dependencies> 覆盖，实测只设 <checkstyleVersion> 仍是 9.3 -->
+                    <dependencies>
+                        <dependency>
+                            <groupId>com.puppycrawl.tools</groupId>
+                            <artifactId>checkstyle</artifactId>
+                            <version>${checkstyle.version}</version>
+                        </dependency>
+                    </dependencies>
+                    <configuration>
+                        <!-- 用引擎 jar 内置的 Google 配置，不另存副本，避免版本漂移 -->
+                        <configLocation>google_checks.xml</configLocation>
+                        <!-- 默认只落 target/checkstyle-result.xml 并打印违规总数，不刷屏；
+                             要看逐条明细：mvn checkstyle:checkstyle，或加 -Dcheckstyle.consoleOutput=true -->
+                        <!-- google_checks.xml 规则 severity 是 warning；默认 violationSeverity=error 会永远算出 0 条 -->
+                        <violationSeverity>warning</violationSeverity>
+                        <failOnViolation>${checkstyle.failOnViolation}</failOnViolation>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
         <plugins>
 
             <plugin>
