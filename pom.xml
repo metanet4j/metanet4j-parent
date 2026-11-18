@@ -283,6 +283,9 @@
                              要看逐条明细：mvn checkstyle:checkstyle，或加 -Dcheckstyle.consoleOutput=true -->
                         <!-- google_checks.xml 规则 severity 是 warning；默认 violationSeverity=error 会永远算出 0 条 -->
                         <violationSeverity>warning</violationSeverity>
+                        <!-- google_checks.xml 自带 SuppressionFilter，默认按进程工作目录找 checkstyle-suppressions.xml；
+                             这里钉成模块根目录的绝对路径，从聚合目录或其他目录调用时也不会失效 -->
+                        <suppressionsLocation>${project.basedir}/checkstyle-suppressions.xml</suppressionsLocation>
                         <failOnViolation>${checkstyle.failOnViolation}</failOnViolation>
                     </configuration>
                 </plugin>
